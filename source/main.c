@@ -3,8 +3,11 @@
 #include "SDL_render.h"
 #include "SDL_surface.h"
 #include "SDL_video.h"
+#include "definitions.h"
+
 
 #define WINDOW_TITLE (const char*)"title789"
+
 
 int main(int argc, char **argv)
 {
@@ -13,7 +16,7 @@ int main(int argc, char **argv)
     int isQuit = 0;
     SDL_Window *win1;
     SDL_Event event;
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
 
     if (SDL_VideoInit(NULL) < 0)
     {
@@ -23,7 +26,7 @@ int main(int argc, char **argv)
         return a;
     }
 
-    win1 = SDL_CreateWindow(WINDOW_TITLE, 300 , 300, 800, 600, SDL_WINDOW_RESIZABLE );
+    win1 = SDL_CreateWindow(WINDOW_TITLE, X_WINDOW_POS , Y_WINDOW_POS, XSIZE_WINDOW_START, YSIZE_WINDOW_START, SDL_WINDOW_RESIZABLE );
 //    SDL_CreateRenderer(win1, -1, flags);
 
     

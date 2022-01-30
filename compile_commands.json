@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/dan/Dokumenty/c/sdl_learn",
-  "command": "/usr/bin/cc  -I/home/dan/Dokumenty/c/sdl_learn/$(PROJECT_BINARY_DIR) -I/usr/include/SDL2    -std=gnu99 -o CMakeFiles/sdl_learn.dir/main.c.o   -c /home/dan/Dokumenty/c/sdl_learn/main.c",
-  "file": "/home/dan/Dokumenty/c/sdl_learn/main.c"
-}
-]
