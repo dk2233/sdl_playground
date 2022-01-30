@@ -7,7 +7,9 @@ set(CMAKE_C_COMPILER clang)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 set(SDL_MAIN 
+    source/sdl_functions.c
     source/main.c)
+
 
 add_executable(sdl_learn ${SDL_MAIN})
 

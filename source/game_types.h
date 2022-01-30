@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  definitions.h
+ *       Filename:  game_types.h
  *
- *    Description: definitions for SDL playground 
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  30.01.2022 20:07:32
+ *        Created:  30.01.2022 21:41:48
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -15,14 +15,14 @@
  *
  * =====================================================================================
  */
-#ifndef DEFINITIONS_INC
-#define DEFINITIONS_INC
+#ifndef GAME_TYPE_INC
+#define GAME_TYPE_INC
 
-#define WINDOW_TITLE (const char*)"title789"
+typedef enum 
+{
+    ALL_OK = 0U,
+    ERROR = 1U,
 
-#define X_WINDOW_POS  300
-#define Y_WINDOW_POS  300
-#define XSIZE_WINDOW_START 800
-#define YSIZE_WINDOW_START 600
+} MyGame_ErrorType ;
 
 #endif

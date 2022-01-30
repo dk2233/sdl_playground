@@ -4,69 +4,36 @@
 #include "SDL_surface.h"
 #include "SDL_video.h"
 #include "definitions.h"
-
-
-#define WINDOW_TITLE (const char*)"title789"
+#include "sdl_functions.h"
 
 
 int main(int argc, char **argv)
 {
 
+    SDL_Event event;
     int a;
     int isQuit = 0;
-    SDL_Window *win1;
-    SDL_Event event;
-    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
 
-    if (SDL_VideoInit(NULL) < 0)
-    {
-
-        printf("error ! \n");
-
-        return a;
-    }
-
-    win1 = SDL_CreateWindow(WINDOW_TITLE, X_WINDOW_POS , Y_WINDOW_POS, XSIZE_WINDOW_START, YSIZE_WINDOW_START, SDL_WINDOW_RESIZABLE );
-//    SDL_CreateRenderer(win1, -1, flags);
-
-    
-
-    if (win1 != NULL)
-    {
-        SDL_SetWindowTitle(win1, WINDOW_TITLE);
-        printf("window title %s \n",SDL_GetWindowTitle(win1));
-
-
-        SDL_Surface *surface1 =  SDL_GetWindowSurface(win1);
-
-        if (surface1 != NULL)
-        {
-            SDL_UpdateWindowSurface(win1);
-        }
+    MyGame_GfxInit();
             
 
-
-        while(0 == isQuit )
+    while(0 == isQuit )
+    {
+        if ( SDL_WaitEvent(&event))
         {
-            if ( SDL_WaitEvent(&event))
+            if (event.type == SDL_KEYDOWN)
             {
-                if (event.type == SDL_KEYDOWN)
-                {
-                    isQuit = 1;
-                }
+                isQuit = 1;
             }
-
         }
 
-
-        SDL_DestroyWindow(win1);
-        SDL_Quit();
-
-
     }
-    
-    a++;
+
+
+
     return a;
 
 }
+    
+
 
