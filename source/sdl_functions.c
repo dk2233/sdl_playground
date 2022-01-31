@@ -15,8 +15,6 @@
  *
  * =====================================================================================
  */
-#include "SDL_video.h"
-#include <SDL.h>
 #include "definitions.h"
 #include "game_types.h"
 #include "sdl_functions.h"
@@ -24,7 +22,7 @@
 /*"---------------------------------------------------*/
 static SDL_Window *win1;
 
-
+static SDL_Surface *surface1;
 /* "--------------------------------------------------- 
  * FUNCTION DEF */
 
@@ -51,7 +49,7 @@ MyGame_ErrorType MyGame_GfxInit(void )
         printf("window title %s \n",SDL_GetWindowTitle(win1));
 
 
-        SDL_Surface *surface1 =  SDL_GetWindowSurface(win1);
+        surface1 =  SDL_GetWindowSurface(win1);
 
         /*  clear drawing area */
         if (surface1 != NULL)
@@ -70,4 +68,9 @@ void MyGame_GfxFinish(void)
     SDL_DestroyWindow(win1);
     SDL_Quit();
 
+}
+
+SDL_Window * MyGame_GetWindow(void)
+{
+    return win1; 
 }

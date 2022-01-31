@@ -5,6 +5,7 @@ set(VERBOSE 1)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 set(SDL_MAIN 
     source/sdl_functions.c
@@ -20,8 +21,9 @@ target_include_directories(sdl_learn PUBLIC
 
 
 find_package(SDL2 REQUIRED)
+#find_package(SDL2_image REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(source)
 
-target_link_libraries(sdl_learn ${SDL2_LIBRARIES})
+target_link_libraries(sdl_learn ${SDL2_LIBRARIES} SDL2_image) 
