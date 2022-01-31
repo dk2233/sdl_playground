@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 #include "SDL_render.h"
+#include "SDL_surface.h"
 #include "definitions.h"
 #include "game_types.h"
 #include "sdl_functions.h"

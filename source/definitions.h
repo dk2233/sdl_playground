@@ -37,6 +37,9 @@
 /* -1 means first that can be used 
  */
 #define RENDERER_INDEX  -1
+
+#define DIRECTION_UP -1
+#define DIRECTION_DOWN 1
 /*-----------------------------------------------------------------------------
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/
