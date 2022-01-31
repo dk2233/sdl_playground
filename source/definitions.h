@@ -33,6 +33,10 @@
 #define Y_WINDOW_POS  300
 #define XSIZE_WINDOW_START 800
 #define YSIZE_WINDOW_START 600
+
+/* -1 means first that can be used 
+ */
+#define RENDERER_INDEX  -1
 /*-----------------------------------------------------------------------------
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/

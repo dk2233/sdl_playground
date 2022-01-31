@@ -15,16 +15,22 @@
  *
  * =====================================================================================
  */
+#include "SDL_render.h"
 #include "definitions.h"
 #include "game_types.h"
 #include "sdl_functions.h"
 
-/*"---------------------------------------------------*/
-static SDL_Window *win1;
+/* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
-static SDL_Surface *surface1;
+
+/*"---------------------------------------------------*/
+/* #####   DATA TYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
+/*  this struct keep most important SDL entities */
+static MyGame_GfxProperties GameSdlEntities = {NULL};
 /* "--------------------------------------------------- 
  * FUNCTION DEF */
+
+/* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
 
 MyGame_ErrorType MyGame_GfxInit(void )
 {
@@ -35,28 +41,48 @@ MyGame_ErrorType MyGame_GfxInit(void )
     {
 
         printf("error ! \n");
-
-        return returnValue;
+        
+        return returnValue++;
     }
 
 
-    win1 = SDL_CreateWindow(WINDOW_TITLE, X_WINDOW_POS , Y_WINDOW_POS, XSIZE_WINDOW_START, YSIZE_WINDOW_START, SDL_WINDOW_RESIZABLE );
+    GameSdlEntities.window_struct_p = SDL_CreateWindow(WINDOW_TITLE, X_WINDOW_POS , Y_WINDOW_POS, XSIZE_WINDOW_START, YSIZE_WINDOW_START, SDL_WINDOW_RESIZABLE );
     
 
-    if (win1 != NULL)
+    if (GameSdlEntities.window_struct_p != NULL)
     {
-        SDL_SetWindowTitle(win1, WINDOW_TITLE);
-        printf("window title %s \n",SDL_GetWindowTitle(win1));
+        SDL_SetWindowTitle(GameSdlEntities.window_struct_p, WINDOW_TITLE);
+        printf("window title %s \n",SDL_GetWindowTitle(GameSdlEntities.window_struct_p));
 
+        //GameSdlEntities.renderer_struct_p = SDL_CreateRenderer(GameSdlEntities.window_struct_p, RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
 
-        surface1 =  SDL_GetWindowSurface(win1);
-
-        /*  clear drawing area */
-        if (surface1 != NULL)
+        if (NULL == GameSdlEntities.renderer_struct_p)
         {
-            SDL_UpdateWindowSurface(win1);
+/*             printf(" I cannot create SDL renderer \n");
+ *             returnValue++;
+ */
+        }
+        else 
+        {
+            SDL_RenderPresent(GameSdlEntities.renderer_struct_p);
         }
 
+        /* if use of renderer we cannot use get window surface anymore! */
+
+        if (NULL == GameSdlEntities.renderer_struct_p)
+        {
+            GameSdlEntities.window_surface_struct_p =  SDL_GetWindowSurface(GameSdlEntities.window_struct_p);
+
+            /*  clear drawing area */
+            if ((GameSdlEntities.window_surface_struct_p != NULL) && (GameSdlEntities.renderer_struct_p == NULL))
+            {
+                SDL_UpdateWindowSurface(GameSdlEntities.window_struct_p);
+            }
+            else 
+            {
+                returnValue++;
+            }
+        }
     
     }
     return returnValue;
@@ -65,12 +91,16 @@ MyGame_ErrorType MyGame_GfxInit(void )
 
 void MyGame_GfxFinish(void)
 {
-    SDL_DestroyWindow(win1);
+    SDL_DestroyWindow(GameSdlEntities.window_struct_p);
+    if (GameSdlEntities.renderer_struct_p != NULL)
+    {
+        SDL_DestroyRenderer(GameSdlEntities.renderer_struct_p);
+    }
     SDL_Quit();
 
 }
 
-SDL_Window * MyGame_GetWindow(void)
+MyGame_GfxProperties * MyGame_GetGfxItems(void)
 {
-    return win1; 
+    return &GameSdlEntities; 
 }

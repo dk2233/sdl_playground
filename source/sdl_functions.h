@@ -42,7 +42,7 @@ extern MyGame_ErrorType MyGame_GfxInit(void);
 
 extern void MyGame_GfxFinish(void); 
 
-extern SDL_Window * MyGame_GetWindow(void);
+extern MyGame_GfxProperties * MyGame_GetGfxItems(void);
 
 #endif
 /* end of sdl_functions.h */

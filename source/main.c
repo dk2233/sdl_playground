@@ -38,7 +38,6 @@ int main(int argc, char **argv)
         img1_surface = IMG_LoadPNG_RW(img1);
         img2_surface = IMG_LoadBMP_RW(img2);
 
-
         SDL_FreeRW(img1);
         SDL_FreeRW(img2);
 
@@ -53,14 +52,14 @@ int main(int argc, char **argv)
         while(i < win_surface->clip_rect.h)
         {
             SDL_Rect *img1_rect = &(img1_surface->clip_rect);
-            img1_rect->x += (30 + i);
+            img1_rect->x = (30 + i);
             a = SDL_BlitSurface(img1_surface, NULL , win_surface, img1_rect);
 
 
             SDL_Rect *img2_rect = &(img2_surface->clip_rect);
 
-            img2_rect->x += 100;
-            img2_rect->y += (100 + i);
+            img2_rect->x = 100;
+            img2_rect->y = (100 + i);
 
             SDL_BlitSurface(img2_surface, NULL , win_surface, img2_rect);
             SDL_UpdateWindowSurface(GfxItems->window_struct_p);
