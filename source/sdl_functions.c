@@ -55,13 +55,13 @@ MyGame_ErrorType MyGame_GfxInit(void )
         SDL_SetWindowTitle(GameSdlEntities.window_struct_p, WINDOW_TITLE);
         printf("window title %s \n",SDL_GetWindowTitle(GameSdlEntities.window_struct_p));
 
-        //GameSdlEntities.renderer_struct_p = SDL_CreateRenderer(GameSdlEntities.window_struct_p, RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
+        GameSdlEntities.renderer_struct_p = SDL_CreateRenderer(GameSdlEntities.window_struct_p, RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
 
         if (NULL == GameSdlEntities.renderer_struct_p)
         {
-/*             printf(" I cannot create SDL renderer \n");
- *             returnValue++;
- */
+            printf(" I cannot create SDL renderer \n");
+            returnValue++;
+
         }
         else 
         {

@@ -1,18 +1,20 @@
-#ifndef GAME_TYPES_HEADER
-#define GAME_TYPES_HEADER
+#ifndef GAME_LOOP_HEADER
+#define GAME_LOOP_HEADER
+
+
 /*
  * =====================================================================================
  *
- *       Filename:  game_types.h
+ *       Filename:  game_loop.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  30.01.2022 21:41:48
+ *        Created:  03.02.2022 00:00:35
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  clang
  *
- *         Author:  YOUR NAME (), 
+ *         Author:  Daniel Kucharski (), progdk22@gmail.com
  *   Organization:  
  *
  * =====================================================================================
@@ -21,9 +23,7 @@
 /*-----------------------------------------------------------------------------
  * HEADER INCLUDES 
  *-----------------------------------------------------------------------------*/
-#include "SDL.h"
-#include "SDL_render.h"
-#include "SDL_surface.h"
+
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
@@ -32,26 +32,15 @@
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/
 
-typedef enum 
-{
-    MYGAME_SDL_ERROR = -1,
-    ALL_OK = 0,
-    MYGAME_ERROR = 1,
-
-} MyGame_ErrorType ;
-
-
-typedef struct
-{
-    SDL_Window *window_struct_p;
-    SDL_Surface *window_surface_struct_p;
-    SDL_Renderer *renderer_struct_p;
-
-} MyGame_GfxProperties;
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/
+extern void MyGame_MainLoopSoftware(void);
 
+extern void MyGame_MainLoopRenderer(void);
 
 #endif
-/* end of game_types.h */
+/* end of game_loop.h */
+
+
+

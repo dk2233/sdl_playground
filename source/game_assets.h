@@ -1,18 +1,20 @@
-#ifndef GAME_TYPES_HEADER
-#define GAME_TYPES_HEADER
+#ifndef GAME_ASSETS_HEADER
+#define GAME_ASSETS_HEADER
+
+
 /*
  * =====================================================================================
  *
- *       Filename:  game_types.h
+ *       Filename:  game_assets.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  30.01.2022 21:41:48
+ *        Created:  02.02.2022 21:16:28
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  clang
  *
- *         Author:  YOUR NAME (), 
+ *         Author:  Daniel Kucharski (), progdk22@gmail.com
  *   Organization:  
  *
  * =====================================================================================
@@ -21,9 +23,13 @@
 /*-----------------------------------------------------------------------------
  * HEADER INCLUDES 
  *-----------------------------------------------------------------------------*/
-#include "SDL.h"
+
+
 #include "SDL_render.h"
-#include "SDL_surface.h"
+#include "game_types.h"
+#include "stdint.h"
+#include <bits/stdint-uintn.h>
+
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
@@ -31,27 +37,39 @@
 /*-----------------------------------------------------------------------------
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/
-
-typedef enum 
+typedef struct 
 {
-    MYGAME_SDL_ERROR = -1,
-    ALL_OK = 0,
-    MYGAME_ERROR = 1,
+    char * gfx_data_file_name;
+    SDL_Texture *gfx_texture;
+    MyGame_ErrorType (* function_to_load_data)(char * gfx_file_name, SDL_Texture * texture);
 
-} MyGame_ErrorType ;
+} MyGame_GfxAsset;
 
 
-typedef struct
+typedef  struct
 {
-    SDL_Window *window_struct_p;
-    SDL_Surface *window_surface_struct_p;
-    SDL_Renderer *renderer_struct_p;
+    const uint8_t background_number;
+    MyGame_GfxAsset **background;
+    
+    const uint8_t player_number;
+    MyGame_GfxAsset **players;
 
-} MyGame_GfxProperties;
+    const uint8_t additional_number;
+    MyGame_GfxAsset **additional_data;
+
+}MyGame_Data;
+
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/
 
+/*  function that loads 
+ *  all defined gfx_file_names
+ *  according to table definition */
+extern MyGame_ErrorType MyGame_Asset_Load(MyGame_Data *gfx_game_data);
 
 #endif
-/* end of game_types.h */
+/* end of game_assets.h */
+
+
+
