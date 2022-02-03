@@ -48,6 +48,13 @@ typedef struct
     SDL_Renderer *renderer_struct_p;
 
 } MyGame_GfxProperties;
+
+typedef struct
+{
+    int isQuit;
+
+
+} MyGameEvent_struct;
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/

@@ -44,5 +44,8 @@ extern void MyGame_GfxFinish(void);
 
 extern MyGame_GfxProperties * MyGame_GetGfxItems(void);
 
+extern MyGame_ErrorType MyGame_RefreshGfx(SDL_Renderer * renderer, SDL_Window *window_p);
+extern
+MyGame_ErrorType LoadImg2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture ** texture);
 #endif
 /* end of sdl_functions.h */

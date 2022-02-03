@@ -33,6 +33,8 @@
 #include "SDL_image.h"
 #include "SDL_timer.h"
 #include "game_loop.h"
+#include "game_assets.h"
+#include "game_events.h"
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -46,10 +48,9 @@ static SDL_Color MyGameBackground = {0, 0,0 ,255};
 
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
-MyGame_ErrorType ClearRenderer(SDL_Color color);
+static MyGame_ErrorType ClearRenderer(SDL_Color color);
 
-
-
+static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *GfxItems);
 
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
@@ -57,34 +58,48 @@ MyGame_ErrorType ClearRenderer(SDL_Color color);
 void MyGame_MainLoopRenderer(void)
 {
     SDL_Event event;
-    SDL_RWops *img1_RW, *img2_RW;
-    SDL_Surface *img1_surface, *img2_surface;
-    SDL_Texture *img1_Texture, *img2_Texture;
     int isQuit = 0;
     int direction = DIRECTION_DOWN;
     MyGame_ErrorType gfxStatus = ALL_OK ;
+    MyGameEvent_struct *Events;
+
 
     if (MyGame_GfxInit() > 0)
     {
        gfxStatus  = MYGAME_ERROR;
     }
 
+    GfxItems = MyGame_GetGfxItems();
 
     /* loading defined gfx */
-    gfxStatus = MyGame_Asset_Load(NULL);
+    gfxStatus = MyGame_Asset_Load(NULL, GfxItems->renderer_struct_p);
     
+
 
     while(1)
     {
 
+
         ClearRenderer(MyGameBackground);
 
+        Events = MyGame_CheckEvents();
+        
+
+
+        MyGame_UpdateView(Events, GfxItems);
+
+        gfxStatus = MyGame_RefreshGfx(GfxItems->renderer_struct_p, NULL);
+        if ((Events->isQuit == 1) || (gfxStatus != ALL_OK))
+        {
+            break;
+
+        }
     }
 
 } 
 
 /* #####   FUNCTION DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ##################### */
-MyGame_ErrorType ClearRenderer(SDL_Color color)
+static MyGame_ErrorType ClearRenderer(SDL_Color color)
 {
     MyGame_ErrorType retValue = ALL_OK;
     retValue = (MyGame_ErrorType)SDL_SetRenderDrawColor(GfxItems->renderer_struct_p, color.r, color.g, color.b, color.a);
@@ -98,5 +113,28 @@ MyGame_ErrorType ClearRenderer(SDL_Color color)
 }
 
 
+static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *GfxItems)
+{
+    int i = 0;
+    int direction = DIRECTION_DOWN;
+    int windows_w, windows_h;
 
 
+    SDL_GetWindowSize(GfxItems->window_struct_p, &windows_w, &windows_h);
+
+    if (i > windows_h) 
+    {
+        direction = DIRECTION_UP;
+    }
+    else if (i<0)
+    {
+        direction = DIRECTION_DOWN;
+
+    }
+    else
+    {
+    }
+
+
+
+}

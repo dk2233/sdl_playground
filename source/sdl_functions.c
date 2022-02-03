@@ -15,6 +15,7 @@
  *
  * =====================================================================================
  */
+#include "SDL_image.h"
 #include "SDL_render.h"
 #include "SDL_surface.h"
 #include "definitions.h"
@@ -104,4 +105,45 @@ void MyGame_GfxFinish(void)
 MyGame_GfxProperties * MyGame_GetGfxItems(void)
 {
     return &GameSdlEntities; 
+}
+
+
+
+MyGame_ErrorType MyGame_RefreshGfx(SDL_Renderer * renderer, SDL_Window *window_p)
+{
+    MyGame_ErrorType output = ALL_OK;
+    if (renderer != NULL)
+    {
+
+        SDL_RenderPresent(renderer);
+    }
+    else if (window_p != NULL)
+    {
+        output = (MyGame_ErrorType)SDL_UpdateWindowSurface(window_p);
+
+    }
+    else {
+        output = MYGAME_ERROR;
+    /*  error - nothing */
+    }
+    return output;
+
+}
+
+
+MyGame_ErrorType LoadImg2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture ** texture)
+{
+
+    MyGame_ErrorType error = ALL_OK; 
+
+    *texture = IMG_LoadTexture(renderer_struct_p, filename); 
+
+    if (NULL == *texture)
+    {
+        error = MYGAME_ERROR;
+    }
+
+
+    return error;
+
 }

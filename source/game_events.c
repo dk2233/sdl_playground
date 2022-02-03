@@ -18,6 +18,8 @@
 
 /* #####   HEADER FILE INCLUDES   ################################################### */
 
+#include "game_types.h"
+#include "SDL_events.h"
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -26,35 +28,27 @@
 
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ################################ */
 
+
+
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
-MyGameEvent_struct MyGame_CheckEvents(void)
+
+MyGameEvent_struct * MyGame_CheckEvents(void)
 {
-    MyGameEvent_struct events;
+    static MyGameEvent_struct EventsState;
+    SDL_Event event;
 
     if ( SDL_PollEvent(&event) >0 )
     {
         if (event.type == SDL_KEYDOWN)
         {
-            isQuit = 1;
-            break;
+            EventsState.isQuit = 1;
         }
     }
 
 
-    if (i > GfxItems->window_surface_struct_p->clip_rect.h)
-    {
-        direction = DIRECTION_UP;
-    }
-    else if (i<0)
-    {
-        direction = DIRECTION_DOWN;
-
-    }
-    else
-    {
-    }
+    return &EventsState;
 
 }
 /* #####   FUNCTION DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ##################### */
