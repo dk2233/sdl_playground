@@ -22,6 +22,7 @@
 #include "SDL_render.h"
 #include "game_types.h"
 #include "sdl_functions.h"
+#include "game_config.h"
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -29,11 +30,7 @@
 /* #####   DATA TYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ################################ */
-MyGame_GfxAsset MyGame_GfxTable[] = {
-         {"gfx/testyuv.bmp", NULL, &LoadImg2Texture} ,\
-        {"gfx/img1.png", NULL, &LoadImg2Texture},
-         {NULL, NULL, NULL} \
-};
+
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
@@ -42,7 +39,12 @@ MyGame_GfxAsset MyGame_GfxTable[] = {
 
 /*  function that loads 
  *  all defined gfx_file_names
- *  according to table definition */
+ *  according to table definition 
+ *
+ *  please define MyGame_GfxTable - 
+ *  or give your own as argument
+ *  so you can create any number of valid MyGame_GfxAsset table types
+ *  */
 MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer * renderer_p)
 {
     MyGame_ErrorType retValue = ALL_OK;
@@ -69,6 +71,7 @@ MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer 
 
         if (MYGAME_ERROR == retValue)
         {
+            printf(" some error during loading of %s \n",game_data[iter].gfx_data_file_name);
             break;
         }
 

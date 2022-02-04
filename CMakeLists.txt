@@ -24,6 +24,7 @@ set(SOURCES
     source/game_assets.c
     source/game_events.c
     source/game_loop_renderer.c
+    source/game_config.c
     #source/game_loop_software.c
     )
 

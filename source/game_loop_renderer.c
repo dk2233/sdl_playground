@@ -44,7 +44,7 @@
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ################################ */
 
 static MyGame_GfxProperties *GfxItems;
-static SDL_Color MyGameBackground = {0, 0,0 ,255};
+static SDL_Color MyGameBackground = {100, 100,0 ,255};
 
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
@@ -63,17 +63,10 @@ void MyGame_MainLoopRenderer(void)
     MyGame_ErrorType gfxStatus = ALL_OK ;
     MyGameEvent_struct *Events;
 
-
-    if (MyGame_GfxInit() > 0)
-    {
-       gfxStatus  = MYGAME_ERROR;
-    }
-
     GfxItems = MyGame_GetGfxItems();
 
     /* loading defined gfx */
     gfxStatus = MyGame_Asset_Load(NULL, GfxItems->renderer_struct_p);
-    
 
 
     while(1)
