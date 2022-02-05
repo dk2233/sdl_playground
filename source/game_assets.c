@@ -60,7 +60,7 @@ MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer 
         game_data = MyGame_GfxTable;
     }
 
-    for(uint8_t iter=0U;  ; iter++)
+    for(uint8_t iter = 0U;  ; iter++)
     {
         if (NULL == game_data[iter].gfx_data_file_name)
         {

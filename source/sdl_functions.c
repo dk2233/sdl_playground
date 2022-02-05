@@ -16,8 +16,10 @@
  * =====================================================================================
  */
 #include "SDL_image.h"
+#include "SDL_pixels.h"
 #include "SDL_render.h"
 #include "SDL_surface.h"
+#include "SDL_timer.h"
 #include "definitions.h"
 #include "game_types.h"
 #include "sdl_functions.h"
@@ -116,6 +118,7 @@ MyGame_ErrorType MyGame_RefreshGfx(SDL_Renderer * renderer, SDL_Window *window_p
     {
 
         SDL_RenderPresent(renderer);
+        SDL_Delay(100);
     }
     else if (window_p != NULL)
     {
@@ -146,4 +149,34 @@ MyGame_ErrorType LoadImg2Texture(char *filename, SDL_Renderer *renderer_struct_p
 
     return error;
 
+}
+
+MyGame_ErrorType LoadImgPng2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture **texture)
+{
+
+    MyGame_ErrorType error = ALL_OK; 
+
+    SDL_Surface *img_surface = IMG_Load(filename);
+
+    if (img_surface != NULL)
+    {
+        if (SDL_SetColorKey(img_surface, SDL_TRUE, SDL_MapRGB(img_surface->format, 0, 0, 0)) != 0)
+        {
+            printf(" I cannot set Key color for %s \n", filename);
+        }
+
+    }
+    else {
+    printf(" problem loading %s \n", filename);
+    }
+
+    *texture = SDL_CreateTextureFromSurface(renderer_struct_p, img_surface ); 
+
+    if (NULL == *texture)
+    {
+        error = MYGAME_ERROR;
+    }
+
+
+    return error;
 }
