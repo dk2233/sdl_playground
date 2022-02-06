@@ -59,12 +59,21 @@ typedef struct
             Uint32 key_down:1;
             Uint32 key_left:1;
             Uint32 key_right:1;
+            Uint32 key_b:1;
         } Keys_bits;
         Uint32 Keys_u32;
     } KeysPressed_Union;
 
 
 } MyGameEvent_struct;
+
+
+typedef enum
+{
+    GFX_SOFTWARE = 1U,
+    GFX_RENDERER,
+
+} MyGame_GfxType;
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/

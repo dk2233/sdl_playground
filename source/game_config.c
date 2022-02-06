@@ -38,11 +38,19 @@ typedef enum
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ################################ */
 
 MyGame_GfxAsset MyGame_GfxTable[] = {
-         {"gfx/testyuv.bmp", NULL, &LoadImg2Texture} ,\
-         {"gfx/img1.png", NULL, &LoadImg2Texture},
-         {"gfx/rpg-maker-mv-tree-tile-based-video-game-rpg-maker-vx-role-playing-video-game-png-favpng-MHcum6JvDUqh8P3UuyHfBqhQY.jpg", NULL, &LoadImg2Texture}, \
-         {"gfx/trees.png", NULL, &LoadImgPng2Texture}, \
-         {NULL, NULL, NULL} \
+         {"gfx/testyuv.bmp", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImg2Texture} ,\
+         {"gfx/img1.png", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImg2Texture},
+         {"gfx/rpg-maker-mv-tree-tile-based-video-game-rpg-maker-vx-role-playing-video-game-png-favpng-MHcum6JvDUqh8P3UuyHfBqhQY.jpg", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImg2Texture}, \
+         {"gfx/trees.png", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImgPng2Texture}, \
+         {NULL, NULL, NULL, NULL} \
+};
+
+MyGame_GfxAsset MyGame_GfxTableSoftware[] = {
+         {"gfx/testyuv.bmp", NULL, NULL, .function_to_load_data.function_load_surface = &LoadImg2Surface} ,\
+         {"gfx/img1.png", NULL, NULL, .function_to_load_data.function_load_surface = &LoadImg2Surface},
+         {"gfx/rpg-maker-mv-tree-tile-based-video-game-rpg-maker-vx-role-playing-video-game-png-favpng-MHcum6JvDUqh8P3UuyHfBqhQY.jpg", NULL, NULL, .function_to_load_data.function_load_surface = &LoadImg2Surface}, \
+         {"gfx/trees.png", NULL, NULL, .function_to_load_data.function_load_surface = &LoadImgPng2Surface}, \
+         {NULL, NULL, NULL, NULL} \
 };
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 

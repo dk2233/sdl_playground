@@ -38,7 +38,7 @@
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/
 
-extern MyGame_ErrorType MyGame_GfxInit(void);
+extern MyGame_ErrorType MyGame_GfxInit(MyGame_GfxType gfx_type);
 
 extern void MyGame_GfxFinish(void); 
 
@@ -48,6 +48,9 @@ extern MyGame_ErrorType MyGame_RefreshGfx(SDL_Renderer * renderer, SDL_Window *w
 extern
 MyGame_ErrorType LoadImg2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture ** texture);
 
+extern MyGame_ErrorType LoadImg2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
 extern MyGame_ErrorType LoadImgPng2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture **texture);
+
+extern MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
 #endif
 /* end of sdl_functions.h */

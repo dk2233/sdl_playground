@@ -47,7 +47,7 @@
 /* #####   VARIABLES  -  LOCAL TO THIS SOURCE FILE   ################################ */
 
 static MyGame_GfxProperties *GfxItems;
-static SDL_Color MyGameBackground = {100, 100,0 ,255};
+static SDL_Color MyGameBackground = {50, 250,20 ,255};
 
 
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
@@ -60,35 +60,32 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
 
 void MyGame_MainLoopRenderer(void)
 {
-    SDL_Event event;
-    int isQuit = 0;
-    int direction = DIRECTION_DOWN;
     MyGame_ErrorType gfxStatus = ALL_OK ;
     MyGameEvent_struct *Events;
 
     GfxItems = MyGame_GetGfxItems();
 
     /* loading defined gfx */
-    gfxStatus = MyGame_Asset_Load(NULL, GfxItems->renderer_struct_p);
+    gfxStatus = MyGame_Asset_Load(NULL, GfxItems->renderer_struct_p, NULL);
 
 
-    while(1)
+    MAIN_GAME_LOOP
     {
 
-
+        /*  clear renderer window */
         ClearRenderer(MyGameBackground);
 
+        /*  read events - keyboard, mouse etc */
         Events = MyGame_CheckEvents();
-        
 
-
+        /*  prepare new gfx */
         MyGame_UpdateView(Events, GfxItems, MyGame_GfxTable);
 
+        /*  refresh renderer + additional delay? */
         gfxStatus = MyGame_RefreshGfx(GfxItems->renderer_struct_p, NULL);
         if ((Events->isQuit == 1) || (gfxStatus != ALL_OK))
         {
             break;
-
         }
     }
 
@@ -176,10 +173,13 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     SDL_Rect src_bg = {0,0, 600, 600};
 
     
+    if (event->KeysPressed_Union.Keys_bits.key_b == SDL_TRUE)
+    {
     if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \
            table[0].gfx_texture , &src_bg, &dest_bg) )
     {
         printf("error copying texture \n");
+    }
     }
     if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \
            table[nr].gfx_texture , &src, &dest) )

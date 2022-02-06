@@ -20,16 +20,18 @@ int main(int argc, char **argv)
     int a = 0;
     MyGame_ErrorType gfxStatus = ALL_OK ;
 
-    if (MyGame_GfxInit() > 0)
+    if (MyGame_GfxInit(GFX_SOFTWARE) > 0)
     {
        gfxStatus  = MYGAME_ERROR;
     }
 
+    GfxItems = MyGame_GetGfxItems();
+
     /*  check if we operates on surface or renderer */
-    if (NULL == GfxItems->window_surface_struct_p)
+    if (NULL != GfxItems->window_surface_struct_p)
     {
 
-//        MyGame_MainLoopSoftware();
+        MyGame_MainLoopSoftware();
 
     }
     else {

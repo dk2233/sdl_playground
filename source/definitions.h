@@ -27,7 +27,8 @@
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
 
-#define WINDOW_TITLE (const char*)"title789"
+#define MAIN_GAME_LOOP while(1)
+#define WINDOW_TITLE (const char*)"Game Renderer"
 
 #define X_WINDOW_POS  300
 #define Y_WINDOW_POS  300

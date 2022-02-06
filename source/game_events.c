@@ -76,6 +76,11 @@ MyGameEvent_struct * MyGame_CheckEvents(void)
                 EventsState.KeysPressed_Union.Keys_bits.key_right = 1;
 
             }
+             if (state[SDL_SCANCODE_B])
+            {
+                EventsState.KeysPressed_Union.Keys_bits.key_b = 1;
+
+            }
         }
     }
 

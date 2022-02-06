@@ -20,6 +20,7 @@
 /* #####   HEADER FILE INCLUDES   ################################################### */
 #include "game_assets.h"
 #include "SDL_render.h"
+#include "SDL_surface.h"
 #include "game_types.h"
 #include "sdl_functions.h"
 #include "game_config.h"
@@ -45,9 +46,11 @@
  *  or give your own as argument
  *  so you can create any number of valid MyGame_GfxAsset table types
  *  */
-MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer * renderer_p)
+MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer * renderer_p, SDL_Surface *window_surface_struct_p)
 {
     MyGame_ErrorType retValue = ALL_OK;
+    MyGame_ErrorType gfxStatus = ALL_OK ;
+    MyGameEvent_struct *Events;
     MyGame_GfxAsset *game_data;
 
     if (NULL != gfx_game_data)
@@ -66,7 +69,14 @@ MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer 
             break;
         }
 
-        retValue = game_data[iter].function_to_load_data(game_data[iter].gfx_data_file_name,renderer_p ,&(game_data[iter].gfx_texture)); 
+        if (renderer_p != NULL)
+        {
+            retValue = game_data[iter].function_to_load_data.function_load_texture_renderer(game_data[iter].gfx_data_file_name,renderer_p ,&(game_data[iter].gfx_texture)); 
+        }
+        else
+        {
+            retValue = game_data[iter].function_to_load_data.function_load_surface(game_data[iter].gfx_data_file_name, &(game_data[iter].gfx_surface), window_surface_struct_p );
+        }
 
         if (MYGAME_ERROR == retValue)
         {
@@ -78,6 +88,5 @@ MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer 
     }
 
     return retValue;
-
 }
 
