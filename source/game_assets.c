@@ -48,7 +48,6 @@
 MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer * renderer_p)
 {
     MyGame_ErrorType retValue = ALL_OK;
-
     MyGame_GfxAsset *game_data;
 
     if (NULL != gfx_game_data)

@@ -26,6 +26,7 @@
 #include "SDL_rect.h"
 #include "SDL_render.h"
 #include "SDL_rwops.h"
+#include "SDL_stdinc.h"
 #include "SDL_surface.h"
 #include "SDL_video.h"
 #include "definitions.h"
@@ -110,7 +111,7 @@ static MyGame_ErrorType ClearRenderer(SDL_Color color)
 
 static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *GfxItems, MyGame_GfxAsset *table)
 {
-    static int i = 0;
+    static SDL_Rect delta = {0, 0, 0 , 0};
     int direction = DIRECTION_DOWN;
     int windows_w, windows_h;
     int nr = 3;
@@ -119,6 +120,24 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     
     int w = 400;
     int h = 50*4;
+
+    if (event->KeysPressed_Union.Keys_bits.key_down == SDL_TRUE)
+    {
+        delta.y++;
+    }
+    
+    if (event->KeysPressed_Union.Keys_bits.key_up == SDL_TRUE)
+    {
+        delta.y--;
+    }
+    if (event->KeysPressed_Union.Keys_bits.key_left == SDL_TRUE)
+    {
+        delta.x--;
+    }
+    if ( event->KeysPressed_Union.Keys_bits.key_right == SDL_TRUE) {
+    delta.x++;
+    }
+
 
     if (SDL_QueryTexture(table[nr].gfx_texture, NULL, NULL, &texture_w, &texture_h) == 0)
     {
@@ -134,20 +153,19 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     SDL_SetTextureBlendMode(table[nr].gfx_texture, SDL_BLENDMODE_BLEND);
     SDL_Rect dest = {0, 0, w, h};
 
-    SDL_Rect src = {0+i,0+i, w, h};
+    SDL_Rect src = {0 + delta.x,0 + delta.y, w, h};
 
 
 
     SDL_GetWindowSize(GfxItems->window_struct_p, &windows_w, &windows_h);
 
-    if (i > windows_h) 
+    if (delta.y > windows_h) 
     {
         direction = DIRECTION_UP;
     }
-    else if (i<0)
+    else if (delta.y<0)
     {
         direction = DIRECTION_DOWN;
-
     }
     else
     {
@@ -156,7 +174,7 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     SDL_Rect dest_bg = {0, 0, windows_w, windows_h};
 
     SDL_Rect src_bg = {0,0, 600, 600};
-    i++;
+
     
     if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \
            table[0].gfx_texture , &src_bg, &dest_bg) )

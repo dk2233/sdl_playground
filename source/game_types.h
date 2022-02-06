@@ -52,6 +52,16 @@ typedef struct
 typedef struct
 {
     int isQuit;
+    union {
+        struct 
+        {
+            Uint32 key_up:1;
+            Uint32 key_down:1;
+            Uint32 key_left:1;
+            Uint32 key_right:1;
+        } Keys_bits;
+        Uint32 Keys_u32;
+    } KeysPressed_Union;
 
 
 } MyGameEvent_struct;
