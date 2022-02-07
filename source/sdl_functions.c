@@ -15,8 +15,14 @@
  *
  * =====================================================================================
  */
+#include "SDL_image.h"
+#include "SDL_pixels.h"
 #include "SDL_render.h"
+#include "SDL_rwops.h"
+#include "SDL_stdinc.h"
 #include "SDL_surface.h"
+#include "SDL_timer.h"
+#include "SDL_video.h"
 #include "definitions.h"
 #include "game_types.h"
 #include "sdl_functions.h"
@@ -33,7 +39,7 @@ static MyGame_GfxProperties GameSdlEntities = {NULL};
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
 
-MyGame_ErrorType MyGame_GfxInit(void )
+MyGame_ErrorType MyGame_GfxInit(MyGame_GfxType gfx_type )
 {
     int returnValue = 0;
 
@@ -48,34 +54,20 @@ MyGame_ErrorType MyGame_GfxInit(void )
 
 
     GameSdlEntities.window_struct_p = SDL_CreateWindow(WINDOW_TITLE, X_WINDOW_POS , Y_WINDOW_POS, XSIZE_WINDOW_START, YSIZE_WINDOW_START, SDL_WINDOW_RESIZABLE );
-    
 
     if (GameSdlEntities.window_struct_p != NULL)
     {
         SDL_SetWindowTitle(GameSdlEntities.window_struct_p, WINDOW_TITLE);
         printf("window title %s \n",SDL_GetWindowTitle(GameSdlEntities.window_struct_p));
 
-        //GameSdlEntities.renderer_struct_p = SDL_CreateRenderer(GameSdlEntities.window_struct_p, RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
 
-        if (NULL == GameSdlEntities.renderer_struct_p)
+        if (GFX_SOFTWARE == gfx_type)
         {
-/*             printf(" I cannot create SDL renderer \n");
- *             returnValue++;
- */
-        }
-        else 
-        {
-            SDL_RenderPresent(GameSdlEntities.renderer_struct_p);
-        }
-
-        /* if use of renderer we cannot use get window surface anymore! */
-
-        if (NULL == GameSdlEntities.renderer_struct_p)
-        {
+            /*  in case software blit operations */
             GameSdlEntities.window_surface_struct_p =  SDL_GetWindowSurface(GameSdlEntities.window_struct_p);
 
             /*  clear drawing area */
-            if ((GameSdlEntities.window_surface_struct_p != NULL) && (GameSdlEntities.renderer_struct_p == NULL))
+            if (GameSdlEntities.window_surface_struct_p != NULL)
             {
                 SDL_UpdateWindowSurface(GameSdlEntities.window_struct_p);
             }
@@ -83,6 +75,27 @@ MyGame_ErrorType MyGame_GfxInit(void )
             {
                 returnValue++;
             }
+        }
+        else if (GFX_RENDERER == gfx_type)
+        {
+
+            /* if use of renderer we cannot use get window surface anymore! */
+            GameSdlEntities.renderer_struct_p = SDL_CreateRenderer(GameSdlEntities.window_struct_p, RENDERER_INDEX, SDL_RENDERER_ACCELERATED);
+
+            if (NULL == GameSdlEntities.renderer_struct_p)
+            {
+                printf(" I cannot create SDL renderer \n");
+                returnValue++;
+
+            }
+            else 
+            {
+                SDL_RenderPresent(GameSdlEntities.renderer_struct_p);
+            }
+
+        }
+        else {
+        ;
         }
     
     }
@@ -104,4 +117,136 @@ void MyGame_GfxFinish(void)
 MyGame_GfxProperties * MyGame_GetGfxItems(void)
 {
     return &GameSdlEntities; 
+}
+
+
+
+MyGame_ErrorType MyGame_RefreshGfx(SDL_Renderer * renderer, SDL_Window *window_p)
+{
+    MyGame_ErrorType output = ALL_OK;
+    if (renderer != NULL)
+    {
+
+        SDL_RenderPresent(renderer);
+        SDL_Delay(100);
+    }
+    else if (window_p != NULL)
+    {
+        output = (MyGame_ErrorType)SDL_UpdateWindowSurface(window_p);
+
+    }
+    else {
+        output = MYGAME_ERROR;
+    /*  error - nothing */
+    }
+    return output;
+
+}
+
+
+MyGame_ErrorType LoadImg2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture ** texture)
+{
+
+    MyGame_ErrorType error = ALL_OK; 
+
+    *texture = IMG_LoadTexture(renderer_struct_p, filename); 
+
+    if (NULL == *texture)
+    {
+        error = MYGAME_ERROR;
+    }
+
+
+    return error;
+
+}
+
+MyGame_ErrorType LoadImg2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p)
+{
+
+    MyGame_ErrorType error = ALL_OK; 
+    SDL_RWops *img_RW;
+    int img_type = 0;
+
+    img_RW = SDL_RWFromFile(filename, "rb");
+
+
+    if (IMG_isBMP(img_RW) == SDL_TRUE)
+    {
+        *img_surface = IMG_LoadBMP_RW(img_RW);
+    }
+    else if (IMG_isJPG(img_RW))
+    {
+        *img_surface = IMG_LoadJPG_RW(img_RW); 
+    }
+
+    
+    *img_surface = SDL_ConvertSurface(*img_surface, window_surface_struct_p->format, 0);
+    
+    if (NULL == img_surface)
+    {
+        error = MYGAME_ERROR;
+    }
+
+
+    return error;
+
+}
+
+MyGame_ErrorType LoadImgPng2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture **texture)
+{
+
+    MyGame_ErrorType error = ALL_OK; 
+
+    SDL_Surface *img_surface = IMG_Load(filename);
+
+    if (img_surface != NULL)
+    {
+        if (SDL_SetColorKey(img_surface, SDL_TRUE, SDL_MapRGB(img_surface->format, 0, 0, 0)) != 0)
+        {
+            printf(" I cannot set Key color for %s \n", filename);
+        }
+
+    }
+    else {
+    printf(" problem loading %s \n", filename);
+    }
+
+    *texture = SDL_CreateTextureFromSurface(renderer_struct_p, img_surface ); 
+
+    if (NULL == *texture)
+    {
+        error = MYGAME_ERROR;
+    }
+
+
+    return error;
+}
+
+MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p)
+{
+
+    MyGame_ErrorType error = ALL_OK; 
+
+    *img_surface = IMG_Load(filename);
+
+    if (*img_surface != NULL)
+    {
+        if (SDL_SetColorKey(*img_surface, SDL_TRUE, SDL_MapRGB((*img_surface)->format, 0, 0, 0)) != 0)
+        {
+            printf(" I cannot set Key color for %s \n", filename);
+        }
+
+    }
+    else {
+    printf(" problem loading %s \n", filename);
+    }
+
+    if (NULL == *img_surface)
+    {
+        error = MYGAME_ERROR;
+    }
+
+
+    return error;
 }

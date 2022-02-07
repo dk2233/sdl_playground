@@ -20,7 +20,14 @@ set(CMAKE_C_EXTENSIONS ON)
 #set sources 
 set(SOURCES 
     source/sdl_functions.c
-    source/main.c)
+    source/main.c
+    source/game_assets.c
+    source/game_events.c
+    source/game_loop_renderer.c
+    source/game_config.c
+    source/game_loop_software.c
+    )
+
 
 # Replace default configurations (Debug/Release/RelWithDebInfo/MinSizeRel) with custom ones.
 # - Debug: maximum debugging

@@ -1,18 +1,20 @@
-#ifndef GAME_TYPES_HEADER
-#define GAME_TYPES_HEADER
+#ifndef GAME_ASSETS_HEADER
+#define GAME_ASSETS_HEADER
+
+
 /*
  * =====================================================================================
  *
- *       Filename:  game_types.h
+ *       Filename:  game_assets.h
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  30.01.2022 21:41:48
+ *        Created:  02.02.2022 21:16:28
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  clang
  *
- *         Author:  YOUR NAME (), 
+ *         Author:  Daniel Kucharski (), progdk22@gmail.com
  *   Organization:  
  *
  * =====================================================================================
@@ -21,9 +23,14 @@
 /*-----------------------------------------------------------------------------
  * HEADER INCLUDES 
  *-----------------------------------------------------------------------------*/
-#include "SDL.h"
+
+
 #include "SDL_render.h"
 #include "SDL_surface.h"
+#include "game_types.h"
+#include "stdint.h"
+#include <bits/stdint-uintn.h>
+
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
@@ -32,52 +39,34 @@
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/
 
-typedef enum 
+typedef union 
 {
-    MYGAME_SDL_ERROR = -1,
-    ALL_OK = 0,
-    MYGAME_ERROR = 1,
+    MyGame_ErrorType (*function_load_texture_renderer)(char * gfx_file_name, SDL_Renderer *renderer_struct_p, SDL_Texture ** texture);
+    MyGame_ErrorType (*function_load_surface)(char *gfx_file_name, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
 
-} MyGame_ErrorType ;
+} MyGame_FunctionToLoadAsset;
 
-
-typedef struct
+typedef struct 
 {
-    SDL_Window *window_struct_p;
-    SDL_Surface *window_surface_struct_p;
-    SDL_Renderer *renderer_struct_p;
+    char * gfx_data_file_name;
+    SDL_Texture *gfx_texture;
+    SDL_Surface *gfx_surface;
+    MyGame_FunctionToLoadAsset function_to_load_data;
 
-} MyGame_GfxProperties;
-
-typedef struct
-{
-    int isQuit;
-    union {
-        struct 
-        {
-            Uint32 key_up:1;
-            Uint32 key_down:1;
-            Uint32 key_left:1;
-            Uint32 key_right:1;
-            Uint32 key_b:1;
-        } Keys_bits;
-        Uint32 Keys_u32;
-    } KeysPressed_Union;
+} MyGame_GfxAsset;
 
 
-} MyGameEvent_struct;
-
-
-typedef enum
-{
-    GFX_SOFTWARE = 1U,
-    GFX_RENDERER,
-
-} MyGame_GfxType;
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/
 
+/*  function that loads 
+ *  all defined gfx_file_names
+ *  according to table definition */
+extern MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer * renderer_p, SDL_Surface *window_surface_struct_p);
 
 #endif
-/* end of game_types.h */
+/* end of game_assets.h */
+
+
+
