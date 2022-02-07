@@ -20,7 +20,10 @@ int main(int argc, char **argv)
     int a = 0;
     MyGame_ErrorType gfxStatus = ALL_OK ;
 
-    if (MyGame_GfxInit(GFX_SOFTWARE) > 0)
+    /*  if you want to use different driver
+     *  GFX_RENDERER
+     *  GFX_SOFTWARE */
+    if (MyGame_GfxInit(GFX_RENDERER) > 0)
     {
        gfxStatus  = MYGAME_ERROR;
     }
