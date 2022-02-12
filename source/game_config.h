@@ -24,12 +24,17 @@
  * HEADER INCLUDES 
  *-----------------------------------------------------------------------------*/
 
+#include "SDL_ttf.h"
 #include "game_assets.h"
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
+#define MYGAME_FONTS_NUMBER 1U
+
 extern MyGame_GfxAsset MyGame_GfxTable[];
 extern MyGame_GfxAsset MyGame_GfxTableSoftware[];
+
+extern TTF_Font * MyGame_Fonts[MYGAME_FONTS_NUMBER];
 /*-----------------------------------------------------------------------------
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/

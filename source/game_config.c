@@ -52,6 +52,7 @@ MyGame_GfxAsset MyGame_GfxTableSoftware[] = {
          {"gfx/trees.png", NULL, NULL, .function_to_load_data.function_load_surface = &LoadImgPng2Surface}, \
          {NULL, NULL, NULL, NULL} \
 };
+TTF_Font * MyGame_Fonts[MYGAME_FONTS_NUMBER] = {NULL};
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */

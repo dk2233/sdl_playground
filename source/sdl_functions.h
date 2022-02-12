@@ -26,6 +26,8 @@
 #include "game_types.h"
 #include "SDL_video.h"
 #include <SDL.h>
+#include "SDL_ttf.h"
+#include "game_assets.h"
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
@@ -52,5 +54,9 @@ extern MyGame_ErrorType LoadImg2Surface(char *filename, SDL_Surface **img_surfac
 extern MyGame_ErrorType LoadImgPng2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture **texture);
 
 extern MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
+
+extern TTF_Font * MyGame_LoadFont(char * font_file);
+
+extern SDL_Surface * MyGame_TextOnScreen(TTF_Font *ttf_font, char * text, SDL_Color  color);
 #endif
 /* end of sdl_functions.h */

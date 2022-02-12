@@ -21,9 +21,11 @@
 #include "game_assets.h"
 #include "SDL_render.h"
 #include "SDL_surface.h"
+#include "SDL_ttf.h"
 #include "game_types.h"
 #include "sdl_functions.h"
 #include "game_config.h"
+#include "definitions.h"
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -87,6 +89,8 @@ MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer 
 
     }
 
+    MyGame_Fonts[0] =  MyGame_LoadFont(MYGAME_FONT);
+ 
     return retValue;
 }
 

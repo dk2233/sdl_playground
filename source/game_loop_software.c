@@ -35,6 +35,7 @@
 #include "game_loop.h"
 #include "game_assets.h"
 #include "game_events.h"
+#include "SDL_ttf.h"
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */

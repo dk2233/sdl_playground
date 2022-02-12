@@ -24,9 +24,12 @@
 #include "SDL_timer.h"
 #include "SDL_video.h"
 #include "definitions.h"
+#include "game_assets.h"
 #include "game_types.h"
 #include "sdl_functions.h"
 
+#include "SDL_ttf.h"
+#include <stdio.h>
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 
@@ -50,6 +53,13 @@ MyGame_ErrorType MyGame_GfxInit(MyGame_GfxType gfx_type )
         printf("error ! \n");
         
         return returnValue++;
+    }
+
+    if (TTF_Init() != ALL_OK  )
+    {
+        printf("Error initializing TTF SDL \n");
+        return returnValue++;
+
     }
 
 
@@ -249,4 +259,35 @@ MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, S
 
 
     return error;
+}
+
+
+
+TTF_Font * MyGame_LoadFont(char * font_file)
+{
+    static TTF_Font * font = NULL;
+
+    font = TTF_OpenFont(font_file, 12);
+
+    if (NULL == font )
+    {
+        printf("Cannot load font %s \n",font_file);
+        printf("%s\n",TTF_GetError());
+    }
+ 
+
+
+    return font;
+
+}
+
+SDL_Surface * MyGame_TextOnScreen(TTF_Font *ttf_font, char * text, SDL_Color  color)
+{
+
+    /*  idea is this function will keep font after loading */
+    static SDL_Surface * sdl_surface; 
+
+    sdl_surface = TTF_RenderText_Solid( ttf_font , text,  color);
+
+    return sdl_surface;
 }

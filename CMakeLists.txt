@@ -10,6 +10,8 @@ set(VERBOSE ON)
 
 FIND_PACKAGE(SDL2 REQUIRED)
 FIND_PACKAGE(SDL2_image REQUIRED)
+FIND_PACKAGE(SDL2_ttf REQUIRED)
+
 #FIND_PACKAGE(OpenAL REQUIRED)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -50,4 +52,4 @@ target_include_directories(sdl_learn PUBLIC
 include_directories(${SDL2_INCLUDE_DIRS})
 include_directories(source)
 
-target_link_libraries(sdl_learn ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES}) 
+target_link_libraries(sdl_learn ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})  

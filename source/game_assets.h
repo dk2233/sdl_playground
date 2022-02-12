@@ -27,6 +27,7 @@
 
 #include "SDL_render.h"
 #include "SDL_surface.h"
+#include "SDL_ttf.h"
 #include "game_types.h"
 #include "stdint.h"
 #include <bits/stdint-uintn.h>
@@ -54,7 +55,6 @@ typedef struct
     MyGame_FunctionToLoadAsset function_to_load_data;
 
 } MyGame_GfxAsset;
-
 
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 

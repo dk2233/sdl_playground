@@ -38,6 +38,7 @@
 #include "game_assets.h"
 #include "game_events.h"
 #include "game_config.h"
+#include <stdio.h>
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -173,6 +174,31 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     SDL_Rect src_bg = {0,0, 600, 600};
 
     
+    SDL_Color text_color = {0,0,0,255};
+    SDL_Surface * text_surface = MyGame_TextOnScreen(MyGame_Fonts[0], "String!", text_color);
+    if (text_surface != NULL)
+    {
+        SDL_Texture *text_texture;
+        text_texture = SDL_CreateTextureFromSurface(GfxItems->renderer_struct_p , text_surface );
+        if (text_texture != NULL)
+        {
+             SDL_Rect text_size = {0};
+             if (ALL_OK == SDL_QueryTexture(text_texture, NULL, NULL, &text_size.w, &text_size.h))
+             {
+                 text_size.x = 20;
+                 text_size.y = windows_h - 50;
+
+                 if (SDL_RenderCopy(GfxItems->renderer_struct_p, text_texture, NULL, &text_size) != ALL_OK)
+                 {
+                     printf("problem writing text to screen \n");
+
+                 }
+
+             }
+        }
+        
+
+    }
     if (event->KeysPressed_Union.Keys_bits.key_b == SDL_TRUE)
     {
     if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \

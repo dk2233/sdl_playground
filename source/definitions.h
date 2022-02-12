@@ -43,6 +43,8 @@
 #define DIRECTION_DOWN 1
 
 
+#define MYGAME_FONT   "gfx/DejaVuSans.ttf"
+
 #define SDL_ALL_OK 0
 /*-----------------------------------------------------------------------------
  * TYPEDEFS 
