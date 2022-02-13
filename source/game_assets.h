@@ -26,6 +26,7 @@
 
 
 #include "SDL_render.h"
+#include "SDL_stdinc.h"
 #include "SDL_surface.h"
 #include "SDL_ttf.h"
 #include "game_types.h"
@@ -55,6 +56,15 @@ typedef struct
     MyGame_FunctionToLoadAsset function_to_load_data;
 
 } MyGame_GfxAsset;
+
+typedef struct 
+{
+    char *file_font;
+    int font_size;
+    TTF_Font *ttf_font;
+
+} MyGame_FontAsset;
+
 
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 

@@ -26,6 +26,8 @@
 #include "sdl_functions.h"
 #include "game_config.h"
 #include "definitions.h"
+#include <bits/stdint-uintn.h>
+#include "stdlib.h"
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -89,7 +91,22 @@ MyGame_ErrorType MyGame_Asset_Load(MyGame_GfxAsset *gfx_game_data, SDL_Renderer 
 
     }
 
-    MyGame_Fonts[0] =  MyGame_LoadFont(MYGAME_FONT);
+
+    for(uint8_t font_i = 0U; ; font_i++)
+    {
+        if (NULL == MyGame_FontDefinition[font_i].file_font)
+        {
+            break;
+        }
+        if (ALL_OK !=  MyGame_LoadFont(&MyGame_FontDefinition[font_i]))
+        {
+            printf("Problem read font %s \n",MyGame_FontDefinition[font_i].file_font);
+
+        }
+
+        
+
+    }
  
     return retValue;
 }

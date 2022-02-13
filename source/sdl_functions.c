@@ -263,22 +263,21 @@ MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, S
 
 
 
-TTF_Font * MyGame_LoadFont(char * font_file)
+MyGame_ErrorType MyGame_LoadFont(MyGame_FontAsset * font_asset)
 {
+    MyGame_ErrorType retValue = ALL_OK; 
     static TTF_Font * font = NULL;
 
-    font = TTF_OpenFont(font_file, 12);
+    font_asset->ttf_font = TTF_OpenFont(font_asset->file_font, font_asset->font_size);
 
-    if (NULL == font )
+    if (NULL == font_asset->ttf_font )
     {
-        printf("Cannot load font %s \n",font_file);
+        printf("Cannot load font %s \n",font_asset->file_font);
         printf("%s\n",TTF_GetError());
+        retValue = MYGAME_ERROR;
     }
  
-
-
-    return font;
-
+    return retValue;
 }
 
 SDL_Surface * MyGame_TextOnScreen(TTF_Font *ttf_font, char * text, SDL_Color  color)

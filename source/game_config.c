@@ -18,6 +18,7 @@
 
 
 /* #####   HEADER FILE INCLUDES   ################################################### */
+#include "game_assets.h"
 #include "game_types.h"
 #include "sdl_functions.h"
 #include "game_config.h"
@@ -52,7 +53,12 @@ MyGame_GfxAsset MyGame_GfxTableSoftware[] = {
          {"gfx/trees.png", NULL, NULL, .function_to_load_data.function_load_surface = &LoadImgPng2Surface}, \
          {NULL, NULL, NULL, NULL} \
 };
-TTF_Font * MyGame_Fonts[MYGAME_FONTS_NUMBER] = {NULL};
+
+MyGame_FontAsset MyGame_FontDefinition[] = {
+    {"fonts/8-bit.ttf", 16, NULL},
+    {"fonts/MyGirlIsRetroDEMO.ttf", 20, NULL},
+    {NULL, 0, NULL}
+};
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */

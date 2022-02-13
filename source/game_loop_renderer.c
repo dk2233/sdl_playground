@@ -39,6 +39,8 @@
 #include "game_events.h"
 #include "game_config.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 /* #####   MACROS  -  LOCAL TO THIS SOURCE FILE   ################################### */
 
 /* #####   TYPE DEFINITIONS  -  LOCAL TO THIS SOURCE FILE   ######################### */
@@ -175,7 +177,32 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
 
     
     SDL_Color text_color = {0,0,0,255};
-    SDL_Surface * text_surface = MyGame_TextOnScreen(MyGame_Fonts[0], "String!", text_color);
+
+
+    char * text = calloc(20 , sizeof(char));
+    char * value = calloc(4, sizeof(char));
+    if (text == NULL)
+    {
+        printf("problem allocating text \n");
+    }
+    else {
+        int ret = sprintf(value, "%d", delta.x);
+        
+        if (0 > ret )
+        {
+            printf("problem creating string %d \n", ret);
+
+        }
+        else 
+        {
+            strcat(text, "String " );
+            strcat(text, value);
+        }
+    }
+
+
+
+    SDL_Surface * text_surface = MyGame_TextOnScreen(MyGame_FontDefinition[1].ttf_font, text , text_color);
     if (text_surface != NULL)
     {
         SDL_Texture *text_texture;
@@ -199,6 +226,8 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
         
 
     }
+    free(text);
+    free(value);
     if (event->KeysPressed_Union.Keys_bits.key_b == SDL_TRUE)
     {
     if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \

@@ -55,7 +55,7 @@ extern MyGame_ErrorType LoadImgPng2Texture(char *filename, SDL_Renderer *rendere
 
 extern MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
 
-extern TTF_Font * MyGame_LoadFont(char * font_file);
+MyGame_ErrorType MyGame_LoadFont(MyGame_FontAsset * font_asset);
 
 extern SDL_Surface * MyGame_TextOnScreen(TTF_Font *ttf_font, char * text, SDL_Color  color);
 #endif
