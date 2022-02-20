@@ -1,67 +1,47 @@
-#ifndef DEFINITIONS_HEADER
-#define DEFINITIONS_HEADER
+#ifndef GAME_WORLD_HEADER
+#define GAME_WORLD_HEADER
+
 
 /*
  * =====================================================================================
  *
- *       Filename:  definitions.h
+ *       Filename:  game_world.h
  *
- *    Description: definitions for SDL playground 
+ *    Description:  
  *
  *        Version:  1.0
- *        Created:  30.01.2022 20:07:32
+ *        Created:  17.02.2022 01:29:49
  *       Revision:  none
- *       Compiler:  gcc
+ *       Compiler:  clang
  *
- *         Author:  YOUR NAME (), 
+ *         Author:  Daniel Kucharski (), progdk22@gmail.com
  *   Organization:  
  *
  * =====================================================================================
  */
 
 /*-----------------------------------------------------------------------------
- * HEADER 
+ * HEADER INCLUDES 
  *-----------------------------------------------------------------------------*/
-
+#include "SDL_stdinc.h"
+#include "game_config.h"
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 
  *-----------------------------------------------------------------------------*/
 
-#define MAIN_GAME_LOOP while(1)
-#define WINDOW_TITLE (const char*)"Game Renderer"
-
-#define X_WINDOW_POS  300
-#define Y_WINDOW_POS  300
-#define XSIZE_WINDOW_START 800
-#define YSIZE_WINDOW_START 600
-#define MYGAME_VIEW_X_SIZE  10
-#define MYGAME_VIEW_Y_SIZE  10
-#define MYGAME_LOCATION_PX_SIZE_X 50
-#define MYGAME_LOCATION_PX_SIZE_Y 50
-
-/* -1 means first that can be used 
- */
-#define RENDERER_INDEX  -1
-
-#define DIRECTION_UP -1
-#define DIRECTION_DOWN 1
-
-
-
-#define SDL_ALL_OK 0
 /*-----------------------------------------------------------------------------
  * TYPEDEFS 
  *-----------------------------------------------------------------------------*/
+
+extern Uint8 MyGame_WorldArray[WORLD_SIZE_X][WORLD_SIZE_Y];
 
 /*-----------------------------------------------------------------------------
  * GLOBAL FUNCTION PROTOTYPES 
  *-----------------------------------------------------------------------------*/
 
-
+extern void MyGame_RandomWorldCreate(void);
 #endif
-/* end of definitions.h */
-
-
+/* end of game_world.h */
 
 
 

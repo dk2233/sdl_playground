@@ -32,20 +32,43 @@
 #define MYGAME_FONTS_NUMBER 1U
 #define MYGAME_FONT   "fonts/8-bit.ttf"
 
+#define WORLD_SIZE_X   100U
+#define WORLD_SIZE_Y   100U
+#define WORLD_MAP_TYPES 20U
+
+/*-----------------------------------------------------------------------------
+ * TYPEDEFS 
+ *-----------------------------------------------------------------------------*/
+
+typedef enum
+{
+    MYGAME_GFX_BEACH = 0U,
+    MYGAME_GFX_PLAY,
+    MYGAME_GFX_TREES,
+} MYGame_Gfx_Ids;
+
+
+/*  this depends on enum that defines 
+ *  order of all graphics
+ *  */
+typedef struct 
+{
+   MYGame_Gfx_Ids gfx_id;
+   SDL_Rect gfx_size_properties;
+} MyGame_AssetPartDefinition;
+/*-----------------------------------------------------------------------------
+ * GLOBAL FUNCTION PROTOTYPES 
+ *-----------------------------------------------------------------------------*/
+
 extern MyGame_GfxAsset MyGame_GfxTable[];
 
 extern MyGame_GfxAsset MyGame_GfxTableSoftware[];
 
 extern MyGame_FontAsset MyGame_FontDefinition[];
-/*-----------------------------------------------------------------------------
- * TYPEDEFS 
- *-----------------------------------------------------------------------------*/
 
-/*-----------------------------------------------------------------------------
- * GLOBAL FUNCTION PROTOTYPES 
- *-----------------------------------------------------------------------------*/
+extern MyGame_AssetPartDefinition  MyGame_PartTableDef[];
 
-
+#define MYGAME_PARTS_DEFINED 3U
 #endif
 /* end of game_config.h */
 

@@ -47,7 +47,7 @@ extern void MyGame_GfxFinish(void);
 extern MyGame_GfxProperties * MyGame_GetGfxItems(void);
 
 extern MyGame_ErrorType MyGame_RefreshGfx(SDL_Renderer * renderer, SDL_Window *window_p);
-extern
+extern 
 MyGame_ErrorType LoadImg2Texture(char *filename, SDL_Renderer *renderer_struct_p, SDL_Texture ** texture);
 
 extern MyGame_ErrorType LoadImg2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
@@ -55,7 +55,7 @@ extern MyGame_ErrorType LoadImgPng2Texture(char *filename, SDL_Renderer *rendere
 
 extern MyGame_ErrorType LoadImgPng2Surface(char *filename, SDL_Surface **img_surface, SDL_Surface *window_surface_struct_p);
 
-MyGame_ErrorType MyGame_LoadFont(MyGame_FontAsset * font_asset);
+extern MyGame_ErrorType MyGame_LoadFont(MyGame_FontAsset * font_asset);
 
 extern SDL_Surface * MyGame_TextOnScreen(TTF_Font *ttf_font, char * text, SDL_Color  color);
 #endif

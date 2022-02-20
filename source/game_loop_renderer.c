@@ -38,6 +38,7 @@
 #include "game_assets.h"
 #include "game_events.h"
 #include "game_config.h"
+#include "game_world.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -52,11 +53,17 @@
 static MyGame_GfxProperties *GfxItems;
 static SDL_Color MyGameBackground = {50, 250,20 ,255};
 
-
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 static MyGame_ErrorType ClearRenderer(SDL_Color color);
 
 static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *GfxItems, MyGame_GfxAsset *table);
+
+static void DrawViewMap(Uint8 table_with_map_def[WORLD_SIZE_X][WORLD_SIZE_Y],\
+        MyGame_GfxProperties *GfxItems,\
+        MyGame_GfxAsset *assets_table, \
+        MyGame_AssetPartDefinition *table_parts,\
+        Uint8 gfx_nr, \
+        SDL_Rect *current_view_prop );
 
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
@@ -111,16 +118,18 @@ static MyGame_ErrorType ClearRenderer(SDL_Color color)
 
 static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *GfxItems, MyGame_GfxAsset *table)
 {
-    static SDL_Rect delta = {0, 0, 0 , 0};
+    static SDL_Rect delta = {0, 0, MYGAME_VIEW_X_SIZE , MYGAME_VIEW_Y_SIZE};
     int direction = DIRECTION_DOWN;
     int windows_w, windows_h;
-    int nr = 3;
+    int nr = 2;
     int texture_w, texture_h;
     Uint8 alpha = 0U;
     
     int w = 400;
     int h = 50*4;
 
+    /*  
+     *  keyboard handler */
     if (event->KeysPressed_Union.Keys_bits.key_down == SDL_TRUE)
     {
         delta.y++;
@@ -138,7 +147,6 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     delta.x++;
     }
 
-
     if (SDL_QueryTexture(table[nr].gfx_texture, NULL, NULL, &texture_w, &texture_h) == 0)
     {
 //        printf("szie of texture %d, %d \n",texture_w, texture_h);
@@ -151,11 +159,6 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
 
     }
     SDL_SetTextureBlendMode(table[nr].gfx_texture, SDL_BLENDMODE_BLEND);
-    SDL_Rect dest = {0, 0, w, h};
-
-    SDL_Rect src = {0 + delta.x,0 + delta.y, w, h};
-
-
 
     SDL_GetWindowSize(GfxItems->window_struct_p, &windows_w, &windows_h);
 
@@ -202,6 +205,7 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
 
 
 
+    /*  text write - to be move to function */
     SDL_Surface * text_surface = MyGame_TextOnScreen(MyGame_FontDefinition[1].ttf_font, text , text_color);
     if (text_surface != NULL)
     {
@@ -228,20 +232,56 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
     }
     free(text);
     free(value);
+
     if (event->KeysPressed_Union.Keys_bits.key_b == SDL_TRUE)
     {
-    if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \
-           table[0].gfx_texture , &src_bg, &dest_bg) )
-    {
-        printf("error copying texture \n");
-    }
-    }
-    if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \
-           table[nr].gfx_texture , &src, &dest) )
-    {
-        printf("error copying texture \n");
+        if (0 != SDL_RenderCopy(GfxItems->renderer_struct_p, \
+                    table[0].gfx_texture , &src_bg, &dest_bg) )
+        {
+            printf("error copying texture \n");
+        }
     }
 
+
+    DrawViewMap(MyGame_WorldArray, GfxItems, table , MyGame_PartTableDef,  nr, &delta);
+
+
+
+}
+
+static void DrawViewMap(Uint8 table_with_map_def[WORLD_SIZE_X][WORLD_SIZE_Y],\
+        MyGame_GfxProperties *GfxItems,\
+        MyGame_GfxAsset *assets_table, \
+        MyGame_AssetPartDefinition *table_parts,\
+        Uint8 gfx_nr, \
+        SDL_Rect *current_view_prop )
+{
+    /* definition
+     * current_view_prop - current view set X, Y in maps + size 
+     */
+
+
+    Uint8 view_ix = 0;
+    /*  SDL_Rect just keep number of shown gfx */
+    for(Uint8 ix = current_view_prop->x; ix < (current_view_prop->w + current_view_prop->x) ; ix++)
+    {
+        Uint8 view_iy = 0;
+        for(Uint8 iy = current_view_prop->y; iy < (current_view_prop->h + current_view_prop->y) ; iy++)
+        {  
+            /*  read gfx definition for current location */
+            Uint8 nr = table_with_map_def[ix][iy]; 
+
+            if (nr < MYGAME_PARTS_DEFINED)
+            {
+                SDL_Rect dstrect = {0 + view_ix * MYGAME_LOCATION_PX_SIZE_X, 0 + view_iy * MYGAME_LOCATION_PX_SIZE_Y, table_parts[nr].gfx_size_properties.w, table_parts[nr].gfx_size_properties.h};
+                SDL_RenderCopy(GfxItems->renderer_struct_p, assets_table[gfx_nr].gfx_texture , &(table_parts[nr].gfx_size_properties) , &dstrect);
+            }
+
+            view_iy++;
+
+        }
+        view_ix++;
+    }
 
 
 }

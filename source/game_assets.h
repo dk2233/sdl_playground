@@ -29,9 +29,9 @@
 #include "SDL_stdinc.h"
 #include "SDL_surface.h"
 #include "SDL_ttf.h"
-#include "game_types.h"
 #include "stdint.h"
 #include <bits/stdint-uintn.h>
+#include "game_types.h"
 
 /*-----------------------------------------------------------------------------
  * MACROS, DEFINES 

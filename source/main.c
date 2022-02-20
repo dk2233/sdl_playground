@@ -7,6 +7,7 @@
 #include "SDL_video.h"
 #include "definitions.h"
 #include "game_types.h"
+#include "game_world.h"
 #include "sdl_functions.h"
 #include "SDL_image.h"
 #include "SDL_timer.h"
@@ -38,6 +39,7 @@ int main(int argc, char **argv)
 
     }
     else {
+        MyGame_RandomWorldCreate();
         MyGame_MainLoopRenderer();
     }
 
