@@ -45,6 +45,8 @@ typedef enum
     MYGAME_GFX_BEACH = 0U,
     MYGAME_GFX_PLAY,
     MYGAME_GFX_TREES,
+    MYGAME_GFX_HOMES,
+    MYGAME_PARTS_DEFINED, /*  this is defined to  */ 
 } MYGame_Gfx_Ids;
 
 
@@ -68,7 +70,6 @@ extern MyGame_FontAsset MyGame_FontDefinition[];
 
 extern MyGame_AssetPartDefinition  MyGame_PartTableDef[];
 
-#define MYGAME_PARTS_DEFINED 3U
 #endif
 /* end of game_config.h */
 

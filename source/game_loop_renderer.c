@@ -249,6 +249,9 @@ static void MyGame_UpdateView(MyGameEvent_struct *event, MyGame_GfxProperties *G
 
 }
 
+#define MYGAME_TEXTURE_ID(x)  (MyGame_PartTableDef[x].gfx_id)
+
+#define MYGAME_PART_TABLE_SIZE 5 
 static void DrawViewMap(Uint8 table_with_map_def[WORLD_SIZE_X][WORLD_SIZE_Y],\
         MyGame_GfxProperties *GfxItems,\
         MyGame_GfxAsset *assets_table, \
@@ -271,10 +274,10 @@ static void DrawViewMap(Uint8 table_with_map_def[WORLD_SIZE_X][WORLD_SIZE_Y],\
             /*  read gfx definition for current location */
             Uint8 nr = table_with_map_def[ix][iy]; 
 
-            if (nr < MYGAME_PARTS_DEFINED)
+            if (nr < MYGAME_PART_TABLE_SIZE)
             {
                 SDL_Rect dstrect = {0 + view_ix * MYGAME_LOCATION_PX_SIZE_X, 0 + view_iy * MYGAME_LOCATION_PX_SIZE_Y, table_parts[nr].gfx_size_properties.w, table_parts[nr].gfx_size_properties.h};
-                SDL_RenderCopy(GfxItems->renderer_struct_p, assets_table[gfx_nr].gfx_texture , &(table_parts[nr].gfx_size_properties) , &dstrect);
+                SDL_RenderCopy(GfxItems->renderer_struct_p, MyGame_GfxTable[MYGAME_TEXTURE_ID(nr)].gfx_texture , &(table_parts[nr].gfx_size_properties) , &dstrect);
             }
 
             view_iy++;
@@ -285,3 +288,5 @@ static void DrawViewMap(Uint8 table_with_map_def[WORLD_SIZE_X][WORLD_SIZE_Y],\
 
 
 }
+
+

@@ -34,6 +34,7 @@ MyGame_GfxAsset MyGame_GfxTable[] = {
          {"gfx/testyuv.bmp", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImg2Texture} ,\
          {"gfx/img1.png", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImg2Texture},
          {"gfx/trees.png", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImgPng2Texture}, \
+         {"gfx/homes.png", NULL, NULL, .function_to_load_data.function_load_texture_renderer = &LoadImgPng2Texture}, \
          {NULL, NULL, NULL, NULL} \
 };
 
@@ -55,8 +56,11 @@ MyGame_AssetPartDefinition  MyGame_PartTableDef[] = {
     {MYGAME_GFX_TREES, {.x = 32, .y = 32, .w = 100, .h = 132}},
     {MYGAME_GFX_TREES, {.x = 32, .y = 260, .w = 100, .h = 134}},
     {MYGAME_GFX_TREES, {.x = 32, .y = 490, .w = 100, .h = 134}},
+    {MYGAME_GFX_HOMES, {.x = 99, .y = 23, .w = 134, .h = 200}},
+    {MYGAME_GFX_HOMES, {.x = 466, .y = 236, .w = 83, .h = 224}}
 
 };
+
 /* #####   PROTOTYPES  -  LOCAL TO THIS SOURCE FILE   ############################### */
 
 /* #####   FUNCTION DEFINITIONS  -  EXPORTED FUNCTIONS   ############################ */
